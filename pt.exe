@@ -1,0 +1,22 @@
+import psutil
+import keyboard
+
+def terminate_process_by_name(process_name):
+    for proc in psutil.process_iter(['name']):
+        if proc.info['name'] == process_name:
+            proc.terminate()
+            return True
+    return False
+
+def on_hotkey_press(event):
+    if event.name == 'f12':
+        process_name = 'r5apex.exe';
+        if terminate_process_by_name(process_name):
+            print(f"Process '{process_name}' terminated successfully.")
+        else:
+            print(f"No process with the name '{process_name}' found.")
+
+keyboard.on_press(on_hotkey_press)
+
+
+keyboard.wait('f12')
